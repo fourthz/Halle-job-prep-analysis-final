@@ -12,6 +12,7 @@ library(here)
 
 # Load custom functions
 source(here("functions", "score_likert_scale.R"))
+source(here("functions", "Flaging_Residuals.R"))
 ```
 
 ## Document Purpose
@@ -75,8 +76,9 @@ demo_tidy <- demographics %>%
 # GPA Data Check and Cleanup
 
 ```{r}
+
 # Summary check of GPA values
-gpa %>%
+gpa_sum <- gpa %>%
   summarise(
     min_s1 = min(s1_gpa, na.rm = TRUE),
     max_s1 = max(s1_gpa, na.rm = TRUE),
@@ -85,12 +87,40 @@ gpa %>%
   )
 
 # Identify GPA values outside 1.0–4.3
-gpa %>%
+gpa_id <- gpa %>%
   filter(s1_gpa < 1 | s2_gpa < 1 | s1_gpa > 4.3 | s2_gpa > 4.3)
 
 # Compute weighted GPA
 gpa <- gpa %>%
   mutate(GPA_weighted = (s1_gpa * s1_credits + s2_gpa * s2_credits) / (s1_credits + s2_credits))
+
+# Check consistency between semesters and remove top 10% largest residuals
+
+# Step 1: Filter complete GPA cases
+gpa_clean <- gpa %>%
+  filter(!is.na(s1_gpa) & !is.na(s2_gpa))
+
+# Step 2: Flag top 10% residuals using custom function
+gpa_clean <- gpa_clean %>%
+  mutate(exclude = flag_large_residuals(y = s2_gpa, x = s1_gpa, p = round(0.10 * n())))
+
+# Step 3: Visual check (can be copied to analysis doc if needed)
+ggplot(gpa_clean, aes(x = s1_gpa, y = s2_gpa, color = exclude)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  scale_color_manual(values = c("FALSE" = "grey", "TRUE" = "red")) +
+  labs(title = "Flagging Top 10% Residuals in GPA Consistency",
+       x = "First Semester GPA", y = "Second Semester GPA") +
+  theme_minimal()
+
+# Step 4: Remove flagged and compute GPA_avg
+gpa_clean <- gpa_clean %>%
+  filter(!exclude) %>%
+  mutate(GPA_avg = (s1_gpa + s2_gpa) / 2)
+
+# Step 5: Replace gpa with gpa_clean before merging
+gpa <- gpa_clean  # ensures you use only cleaned records in merge
+
 ```
 
 # Survey Data Cleaning
@@ -161,5 +191,5 @@ analytic_job_data <- analytic_job_data %>%
   select(-c(6, 7, 8))
 
 
-write_csv(analytic_job_data, "analytic_job_final.csv")
+write_csv(analytic_job_data, "analytic_job.csv")
 ```
