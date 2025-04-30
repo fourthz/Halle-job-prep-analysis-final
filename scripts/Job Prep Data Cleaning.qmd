@@ -1,0 +1,159 @@
+---
+title: "Clean and merge the Job Prep Datasets"
+author: "Halle Prine"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readr)
+library(here)
+```
+
+## Document Purpose
+
+This document outlines the data cleaning process for the Job Preparation Study, including validation and formatting of IDs, cleaning of demographic, GPA, and survey data, and creation of composite variables needed for analysis.
+
+## Data Import
+
+First we will import the data and clean along the way whatever is necessary to clean first and foremost. 
+
+```{r}
+# Import raw demographics with unknown structure (extra column included)
+demographics <- read_csv(here("Data", "Job Prep Demographics.csv"),
+                         col_names = FALSE,
+                         col_types = cols(.default = "c"))
+
+# Import GPA Data
+gpa <- read_csv(here("Data", "Job Prep GPA Data.csv"),
+                skip = 5,
+                col_types = "cnnfnnnn",
+                col_names = c("ID", "school_code", "age", "gender",
+                              "s1_credits", "s1_gpa", "s2_credits", "s2_gpa"))
+
+# Import Survey Data
+survey <- read_csv(here("Data", "Job Prep Survey Results.csv"),
+                   skip = 4,
+                   col_types = "cnnnnnnnnnnnnnn",
+                   col_names = c("ID", paste0("item_", 1:14)))
+```
+
+
+## Data Cleaning
+# Demographics Cleaning
+Now we will clean each data frame starting with demographics 
+
+```{r}
+# Assign column names
+colnames(demographics) <- c("ID", "school_code", "age", "gender", "discipline_raw")
+
+# Flag and fill discipline rows
+demographics <- demographics %>%
+  mutate(discipline_marker = if_else(!is.na(ID) & is.na(school_code) & is.na(age) & is.na(gender), ID, NA_character_)) %>%
+  fill(discipline_marker)
+
+# Remove header junk and non-participant rows
+demo_clean <- demographics %>%
+  filter(!ID %in% c("ID", "Job Preparation Study", "Demographic Data"),
+         !is.na(school_code), !is.na(age)) %>%
+  transmute(ID = as.character(ID),
+            school_code = as.character(school_code),
+            age = as.numeric(age),
+            gender = gender,
+            discipline = discipline_marker)
+
+# Remove identified junk rows and column
+demo_tidy <- demographics %>%
+  slice(-c(1:7, 146:150, 304:308, 464:468, 618:622)) %>%
+  select(-discipline_raw)
+```
+
+# GPA Data Check and Cleanup
+
+```{r}
+# Summary check of GPA values
+gpa %>%
+  summarise(
+    min_s1 = min(s1_gpa, na.rm = TRUE),
+    max_s1 = max(s1_gpa, na.rm = TRUE),
+    min_s2 = min(s2_gpa, na.rm = TRUE),
+    max_s2 = max(s2_gpa, na.rm = TRUE)
+  )
+
+# Identify GPA values outside 1.0–4.3
+gpa %>%
+  filter(s1_gpa < 1 | s2_gpa < 1 | s1_gpa > 4.3 | s2_gpa > 4.3)
+
+# Compute weighted GPA
+gpa <- gpa %>%
+  mutate(GPA_weighted = (s1_gpa * s1_credits + s2_gpa * s2_credits) / (s1_credits + s2_credits))
+```
+
+# Survey Data Cleaning
+
+```{r}
+# Reverse-score items on a 6-point Likert scale
+reverse_items <- c("item_4", "item_9", "item_12", "item_13")
+
+survey <- survey %>%
+  mutate(across(all_of(reverse_items), ~ 7 - ., .names = "rev_{.col}"))
+
+# Replace originals with reversed scores
+survey_tidy <- survey %>%
+  mutate(item_4 = rev_item_4,
+         item_9 = rev_item_9,
+         item_12 = rev_item_12,
+         item_13 = rev_item_13) %>%
+  select(-starts_with("rev_"))
+
+# Compute total optimism score
+survey_tidy <- survey_tidy %>%
+  rowwise() %>%
+  mutate(optimism_score = sum(c_across(starts_with("item_")), na.rm = TRUE)) %>%
+  ungroup()
+```
+
+
+## ID Checks
+
+```{r}
+# Check uniqueness and formatting of IDs in each dataset
+demographics %>% count(ID) %>% filter(n > 1)  
+gpa %>% count(ID) %>% filter(n > 1)
+survey %>% count(ID) %>% filter(n > 1)
+
+# Check format (e.g., all numeric or 3-digit strings)
+all_ids_valid <- function(id_vector) {
+  all(str_detect(id_vector, "^\\d{3}$"))  
+}
+
+all_ids_valid(demo_tidy$ID)
+all_ids_valid(gpa$ID)
+all_ids_valid(survey$ID)
+```
+
+## Data Merging 
+
+Now we will merge the data into one analytical dataset. Inorder to retain all participants from the demographics dataset (demo_tidy) we decided to use a left join and just identify missing survey or GPA data
+```{r}
+# Make sure all IDs are character
+demo_tidy <- demo_tidy %>% mutate(ID = as.character(ID))
+gpa <- gpa %>% mutate(ID = as.character(ID))
+survey_tidy <- survey_tidy %>% mutate(ID = as.character(ID))
+
+# Merge datasets using left_join to retain all demographics
+analytic_job_data <- demo_tidy %>%
+  left_join(gpa, by = "ID") %>%
+  left_join(survey_tidy, by = "ID")
+
+# Check how many are missing GPA or survey data
+summary(analytic_job_data)
+
+# Count participants missing key fields
+analytic_job_data %>%
+  summarise(
+    missing_gpa = sum(is.na(s1_gpa) | is.na(s2_gpa)),
+    missing_survey = sum(is.na(optimism_score))
+  )
+```
