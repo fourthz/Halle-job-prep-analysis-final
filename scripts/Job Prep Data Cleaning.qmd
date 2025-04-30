@@ -9,6 +9,9 @@ editor: visual
 library(tidyverse)
 library(readr)
 library(here)
+
+# Load custom functions
+source(here("functions", "score_likert_scale.R"))
 ```
 
 ## Document Purpose
@@ -93,25 +96,13 @@ gpa <- gpa %>%
 # Survey Data Cleaning
 
 ```{r}
-# Reverse-score items on a 6-point Likert scale
-reverse_items <- c("item_4", "item_9", "item_12", "item_13")
-
-survey <- survey %>%
-  mutate(across(all_of(reverse_items), ~ 7 - ., .names = "rev_{.col}"))
-
-# Replace originals with reversed scores
-survey_tidy <- survey %>%
-  mutate(item_4 = rev_item_4,
-         item_9 = rev_item_9,
-         item_12 = rev_item_12,
-         item_13 = rev_item_13) %>%
-  select(-starts_with("rev_"))
-
-# Compute total optimism score
-survey_tidy <- survey_tidy %>%
-  rowwise() %>%
-  mutate(optimism_score = sum(c_across(starts_with("item_")), na.rm = TRUE)) %>%
-  ungroup()
+# Our function that reverse codes and calculates composite scores
+survey_tidy <- score_likert_scale(
+  survey,
+  scale_max = 6,
+  reverse_items = c("item_4", "item_9", "item_12", "item_13")
+) %>%
+  rename(optimism_score = total_score)
 ```
 
 
