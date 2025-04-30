@@ -1,0 +1,320 @@
+---
+title: "Job Prep Data Analysis"
+author: "Halle Prine"
+format: pdf
+editor: visual
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+
+job <- read_csv(here("Data", "analytic_job.csv"))
+```
+
+## Introduction
+
+
+### Descriptive Statistics
+
+```{r}
+# Looking at distribution of Gender
+gender_counts <- job %>%
+  count(gender)
+
+gender_counts
+# A pretty split sample f (380) and m (360)
+
+# Giving five number summary for sample age 
+sample_age <- job %>%
+  summarise(
+    n = sum(!is.na(age)),
+    mean_age = mean(age, na.rm = TRUE),
+    sd_age = sd(age, na.rm = TRUE),
+    min_age = min(age, na.rm = TRUE),
+    q1_age = quantile(age, 0.25, na.rm = TRUE),
+    median_age = median(age, na.rm = TRUE),
+    q3_age = quantile(age, 0.75, na.rm = TRUE),
+    max_age = max(age, na.rm = TRUE)
+  )
+
+sample_age # mean age: 22.01081  sd: 0.5791991  min age: 20. max age: 25
+
+# Looking at distribution of dicipline 
+discipline_freq <- job %>%
+  count(discipline_marker)
+
+discipline_prop <- job %>%
+  count(discipline_marker) %>%
+  mutate(percent = (n / sum(n)) * 100) %>%
+  select(discipline_marker, percent)
+
+discipline_freq
+discipline_prop # pretty evenly distributed 19% APPLIED SCIENCES, 20% FORMAL SCIENCES, 18% HUMANITIES, 21% NATURAL SCIENCES, 20% SOCIAL SCIENCES
+
+# Summary statistics for GPA and optimism
+gpa_opti_fivenum <- job %>%
+  summarise(
+    mean_gpa = mean(GPA_weighted, na.rm = TRUE),
+    sd_gpa = sd(GPA_weighted, na.rm = TRUE),
+    mean_optimism = mean(optimism_score, na.rm = TRUE),
+    sd_optimism = sd(optimism_score, na.rm = TRUE)
+  )
+
+gpa_opti_fivenum # mean 2.566662, sd 0.7278554 for gpa and mean 48.84053, sd 8.427872 for optimism. 
+```
+
+## Stacked Bar graphs 
+
+# gender by dicipline
+```{r}
+
+job <- job %>%
+  mutate(
+    gender = case_when(
+      gender == "f" ~ 0,
+      gender == "m" ~ 1,
+      TRUE ~ NA_real_  # safely handle anything else
+    )
+  )
+
+job %>%
+  filter(!is.na(gender), !is.na(discipline_marker)) %>%
+  count(discipline_marker, gender) %>%
+  mutate(gender = factor(gender, levels = c(0, 1), labels = c("Female", "Male"))) %>%
+  ggplot(aes(x = discipline_marker, y = n, fill = gender)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Gender Breakdown by Discipline",
+    x = "Discipline",
+    y = "Count",
+    fill = "Gender"
+  ) +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+
+
+# dicipline by gpa
+```{r}
+job <- job %>%
+  mutate(
+    gpa_group = case_when(
+      !is.na(GPA_weighted) & GPA_weighted < 2.5  ~ "Low",
+      !is.na(GPA_weighted) & GPA_weighted < 3.5  ~ "Medium",
+      !is.na(GPA_weighted)                       ~ "High",
+      TRUE                                       ~ NA_character_
+    ),
+    gpa_group = factor(gpa_group, levels = c("Low", "Medium", "High"))  # sets stacking order
+  )
+
+job %>%
+  filter(!is.na(gpa_group), !is.na(discipline_marker)) %>%
+  count(discipline_marker, gpa_group) %>%
+  ggplot(aes(x = discipline_marker, y = n, fill = gpa_group)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "GPA Group Breakdown by Discipline",
+    x = "Discipline",
+    y = "Frequency",
+    fill = "GPA Group"
+  ) +
+  theme_minimal()
+```
+
+
+
+### Grouped by Discipline
+
+```{r}
+job %>%
+  group_by(`Discipline` = discipline_marker) %>%
+  summarise(
+    `Mean GPA` = mean(GPA_weighted, na.rm = TRUE),
+    `SD GPA` = sd(GPA_weighted, na.rm = TRUE),
+    `Mean Optimism` = mean(optimism_score, na.rm = TRUE),
+    `SD Optimism` = sd(optimism_score, na.rm = TRUE),
+    `Mean Age` = mean(age, na.rm = TRUE),
+    `SD Age` = sd(age, na.rm = TRUE),
+    `Female (n)` = sum(gender == 0, na.rm = TRUE),
+    `Male (n)` = sum(gender == 1, na.rm = TRUE),
+    `Sample Size` = n()
+  ) %>%
+  kbl(caption = "Table 1. Summary Statistics by Discipline") %>%
+  kable_styling(full_width = FALSE)
+
+```
+
+### Distribution Plots
+
+```{r}
+# GPA distribution
+gpa_his <- ggplot(job, aes(x = GPA_weighted)) +
+  geom_histogram(binwidth = 0.1, fill = "steelblue", color = "white") +
+  labs(title = "Distribution of Weighted GPA", x = "Weighted GPA", y = "Count") +
+  theme_minimal()
+gpa_his
+```
+
+```{r}
+# Optimism distribution
+opti_his <- ggplot(job, aes(x = optimism_score)) +
+  geom_histogram(binwidth = 2, fill = "darkgreen", color = "white") +
+  labs(title = "Distribution of Optimism Score", x = "Optimism Score", y = "Count") +
+  theme_minimal()
+
+opti_his
+```
+
+
+```{r}
+# run model 
+model1 <- lm(optimism_score ~ GPA_weighted, data = job)
+summary(model1)
+
+model2 <- lm(optimism_score ~ GPA_weighted + gender + age + discipline_marker, data = job)
+summary(model2)
+
+model3 <- lm(optimism_score ~ GPA_weighted * gender + GPA_weighted * discipline_marker + age, data = job)
+summary(model3)
+
+# use flag function
+job <- job %>%
+  mutate(flagged = flag_large_residuals(optimism_score, GPA_weighted, p = 5))
+
+# View flagged cases
+ggplot(job, aes(x = GPA_weighted, y = optimism_score, color = flagged)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+
+
+## Questions 1 and 2 consistency check 
+```{r}
+ggplot(job, aes(x = s1_gpa, y = s2_gpa)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Consistency Between First and Second Semester GPA",
+       x = "First Semester GPA", y = "Second Semester GPA") +
+  theme_minimal()
+
+model_gpa_consistency <- lm(s2_gpa ~ s1_gpa, data = job)
+
+summary(model_gpa_consistency)
+```
+
+GPA Consistency Check
+A linear regression was conducted to assess the consistency between first and second semester GPA. Results indicated a strong, positive relationship between the two semesters, R² = 0.80, F(1, 663) = 2622, p < .001. First semester GPA was a significant predictor of second semester GPA (b = 0.85, p < .001), suggesting high academic consistency across semesters. Based on this strong association, averaging the two GPAs provides a reliable indicator of overall academic performance. To further enhance reliability, students with the largest residuals (i.e., most inconsistent GPAs) were excluded from subsequent analyses.
+
+
+```{r}
+job_filter <- job %>%
+  filter(!exclude)  # exclude == TRUE means large residuals
+```
+
+
+
+# Q1 Is GPA related to optimism?
+
+```{r}
+model1 <- lm(optimism_score ~ GPA_weighted + gender + age, data = job_filter)
+summary(model1)
+
+ggplot(job_filter, aes(x = GPA_weighted, y = optimism_score)) +
+  geom_point(alpha = 0.5, color = "steelblue") +
+  geom_smooth(method = "lm", se = TRUE, color = "black") +
+  labs(
+    title = "Relationship Between GPA and Optimism",
+    x = "Weighted GPA",
+    y = "Optimism Score"
+  ) +
+  theme_minimal()
+
+```
+
+A multiple linear regression was conducted to examine whether senior-year GPA predicted students' optimism about future employment. The model included weighted GPA as the primary predictor, controlling for gender and age. Prior to analysis, students with the top 10% largest residuals from a model predicting second-semester GPA from first-semester GPA were excluded to ensure GPA consistency.
+
+Results indicated that GPA was not a significant predictor of optimism, b = –0.22, p = .69. Neither age (p = .22) nor gender (p = .09) were statistically significant predictors, though there was a marginal trend for males reporting slightly lower optimism. The overall model was not statistically significant, F(3, 474) = 1.52, p = .21, with an adjusted R² of only 0.003. These findings suggest that academic performance, as measured by GPA, is not associated with students’ confidence about their future employment prospects.
+
+
+
+
+
+
+
+
+
+
+
+
+# Q2 Is the GPA–optimism relationship different across disciplines?
+```{r}
+model2 <- lm(optimism_score ~ GPA_weighted * discipline_marker + gender + age, data = job_filter)
+summary(model2)
+
+ggplot(job_filter, aes(x = GPA_weighted, y = optimism_score)) +
+  geom_point(alpha = 0.4, aes(color = discipline_marker)) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = discipline_marker)) +
+  facet_wrap(~ discipline_marker) +
+  labs(
+    title = "GPA vs Optimism Across Disciplines",
+    x = "Weighted GPA",
+    y = "Optimism Score",
+    color = "Discipline"
+  ) +
+  theme_minimal()
+```
+
+A multiple regression was used to examine whether the relationship between GPA and optimism varied by academic discipline. The model included main effects and interaction terms for GPA and discipline, controlling for gender and age. The model explained a substantial proportion of variance in optimism scores, F(11, 466) = 42.07, p < .001, adjusted R² = .49.
+
+Significant main effects were observed for discipline: compared to students in applied sciences, those in humanities (b = –15.60, p < .001), natural sciences (b = –11.54, p < .001), and social sciences (b = –11.44, p < .001) reported significantly lower optimism. Gender also emerged as a modest predictor, with males reporting slightly lower optimism than females (b = –1.19, p = .032).
+
+However, the interaction terms between GPA and discipline were not statistically significant (ps > .25), indicating that the relationship between GPA and optimism did not differ by academic field.
+
+
+Figure X. Scatterplots with fitted regression lines showing the relationship between GPA and optimism within each academic discipline. Across all fields, the association between GPA and optimism was weak and non-significant, consistent with model results indicating no meaningful GPA × Discipline interaction.
+
+
+
+
+
+
+# Q3 Is optimism different across disciplines (regardless of GPA)?
+
+```{r}
+model3 <- lm(optimism_score ~ discipline_marker + gender + age, data = job_filter)
+summary(model3)
+
+ggplot(job_filter, aes(x = discipline_marker, y = optimism_score, fill = discipline_marker)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.2, alpha = 0.3, color = "black") +
+  labs(
+    title = "Optimism Score Distribution by Discipline",
+    x = "Discipline",
+    y = "Optimism Score"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+A multiple linear regression was conducted to examine whether optimism scores varied by academic discipline, controlling for gender and age. The overall model was statistically significant, F(6, 471) = 77.39, p < .001, and explained approximately 49% of the variance in optimism scores (adjusted R² = 0.49).
+
+Compared to students in Applied Sciences, students in Humanities (b = –13.46, p < .001), Natural Sciences (b = –9.83, p < .001), and Social Sciences (b = –8.37, p < .001) reported significantly lower optimism. Students in Formal Sciences reported slightly higher optimism (b = +1.91, p = .028). Gender was also a significant predictor, with males reporting lower optimism than females (b = –1.23, p = .027). Age was not significantly related to optimism (p = .79).
+
+These results suggest substantial differences in optimism levels between disciplines, with students in science and humanities fields generally expressing lower optimism about future employment than those in applied or formal science disciplines. The findings are visually supported by the boxplot in Figure X, which illustrates the distribution of optimism scores across disciplines.
+
+
+
+Figure X. Boxplot of optimism scores by academic discipline. Students in Applied and Formal Sciences reported higher optimism about future employment than peers in Humanities, Natural Sciences, or Social Sciences. These differences were statistically significant in the regression model controlling for gender and age.
+
+
