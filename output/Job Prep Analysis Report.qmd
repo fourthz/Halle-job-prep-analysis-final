@@ -272,7 +272,7 @@ Figure 4 shows the distribution of optimism scores among graduating college seni
 
 ### Consistency Check of semester 1 and semester 2 GPAs
 
-Before proceeding to the main analyses, it was important to verify key features of the data set. We first identified any usually high residuals to then remove from the final models for each research question. These residuals can be seen in Figure 5 below. We also ensured that first- and second-semester GPA values were closely aligned before computing an average GPA. To support this, we visualized the the first and second semester's GPA through a scatter plot (Figure 6) then ran a linear regression model to further confirm (Table 2), both indicating strong consistency between semesters.
+Before proceeding to the main analyses, it was important to verify key features of the data set. During the data cleaning process, we ensured that first- and second-semester GPA values were closely aligned before computing an average GPA. To support this, we visualized the the first and second semester's GPA through a scatter plot (Figure 5) then ran a linear regression model to further confirm (Table 2), both indicating strong consistency between semesters. Furthermore, we removed observations with unusually high residuals from this model to reduce the influence of GPA outlines, ensuring that subsequent analyses reflect reliable patterns in academic performance. 
 
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
@@ -326,7 +326,7 @@ ggplot(job, aes(x = s1_gpa, y = s2_gpa, color = exclude)) +
        x = "First Semester GPA", y = "Second Semester GPA") +
   theme_minimal()
 ```
-***Figure 6. Visual Verification of GPA Consistencies Across Semesters***
+***Figure 5. Visual Verification of GPA Consistencies Across Semesters***
 
 Table 2 summarizes the simple linear regression model we ran testing for semester GPA consistencies testing if first semester GPA predicted second semester GPA. Results indicated a strong positive relationship between the two semesters, b = 0.85, SE = 0.017, t(663) = 51.20, p < .001. The intercept was 0.37 (SE = 0.045), suggesting that even students with lower first semester GPAs tended to improve slightly in the second semester. These findings demonstrate high academic stability across terms. Given this consistency, we averaged first and second semester GPAs to represent overall academic performance. Additionally, students with the most extreme residuals—indicating large GPA discrepancies between semesters—were excluded from further analyses to reduce the influence of outliers.
 
