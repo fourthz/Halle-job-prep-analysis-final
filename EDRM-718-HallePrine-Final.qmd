@@ -2,10 +2,11 @@
 title: "Job Prep Analysis Report"
 author: "Halle Prine"
 format:
-  pdf:
-    include-in-header: 
-      text: |
-        \usepackage{float}
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    number-sections: true
 editor: visual
 ---
 
@@ -142,48 +143,10 @@ job %>%
     fill = "Gender"
   ) +
   theme_minimal()
-
-# descriptive table 
-summary_table <- job %>%
-  group_by(`Discipline` = discipline_marker) %>%
-  summarise(
-    `Mean GPA` = mean(GPA_weighted, na.rm = TRUE),
-    `SD GPA` = sd(GPA_weighted, na.rm = TRUE),
-    `Mean Optimism` = mean(optimism_score, na.rm = TRUE),
-    `SD Optimism` = sd(optimism_score, na.rm = TRUE),
-    `Mean Age` = mean(age, na.rm = TRUE),
-    `SD Age` = sd(age, na.rm = TRUE),
-    `Female (n)` = sum(gender == 0, na.rm = TRUE),
-    `Male (n)` = sum(gender == 1, na.rm = TRUE),
-    `Sample Size` = n()
-  )
-
-# Make the discipline names lowercase (assuming there's a "discipline" or similar column)
-summary_table <- summary_table %>%
-  mutate(across(1, ~ str_to_title(tolower(.))))  
-
-# Build styled table
-summary_table %>%
-  kbl(
-    caption = "Table 1. Summary statistics by discipline", 
-    booktabs = TRUE,
-    digits = 2
-  ) %>%
-  kable_styling(
-    full_width = FALSE,
-    latex_options = "scale_down",
-    position = "center"
-  ) %>%
-  row_spec(0, bold = TRUE, background = "#f2f2f2") %>%
-  row_spec(seq(1, nrow(summary_table), 2), background = "#ffffff") %>%
-  row_spec(seq(2, nrow(summary_table), 2), background = "#f9f9f9")
 ```
-
 ***Figure 1. Gender by Academic Discipline Stacked Bar Plot***
-
 Shown in Figure 1, we visualizes the gender distribution across the five academic disciplines: Applied Sciences (AS), Formal Sciences (FS), Humanities (HUM), Natural Sciences (NS), and Social Sciences (SS). Gender representation was relatively balanced in most disciplines, with Applied Sciences, Humanities, Formal Sciences, and Natural Sciences each showing near-equal proportions of male and female students. Social Sciences, however, had a noticeably higher proportion of female students. These patterns may reflect broader national trends in undergraduate enrollment and highlight the importance of considering gender composition when interpreting discipline-specific outcomes.
 
-Table 1 provides detailed descriptive statistics by academic discipline, offering a closer look at sample characteristics. Mean GPA was relatively stable across disciplines, ranging from 2.48 in SS to 2.64 in HUM. However, optimism scores demonstrated more variability: students in FS reported the highest mean optimism (M = 56.96), while those in HUM reported the lowest (M = 41.05). Age was consistent across groups, averaging slightly above 22 years, with limited variability (Sd ± 1 year).
 
 ```{r echo=FALSE, warning=FALSE}
 job <- job %>%
@@ -226,6 +189,46 @@ job %>%
 ***Figure 2. GPA by Academic Discipline Stacked Bar Graph***
 
 Exploring the distribution of students across GPA categories—Low (\<2.5), Medium (2.5–3.5), and High (\>3.5)—within each academic discipline is shown ins Figure 2. In all five disciplines, the majority of students fall into the Medium GPA category (green), with relatively few students classified in the High GPA group (blue). These results indicate that while GPA distributions are generally consistent, there are some discipline-specific variations in how students are spread across performance categories.
+
+```{r echo=FALSE, warning=FALSE}
+# descriptive table 
+summary_table <- job %>%
+  group_by(`Discipline` = discipline_marker) %>%
+  summarise(
+    `Mean GPA` = mean(GPA_weighted, na.rm = TRUE),
+    `SD GPA` = sd(GPA_weighted, na.rm = TRUE),
+    `Mean Optimism` = mean(optimism_score, na.rm = TRUE),
+    `SD Optimism` = sd(optimism_score, na.rm = TRUE),
+    `Mean Age` = mean(age, na.rm = TRUE),
+    `SD Age` = sd(age, na.rm = TRUE),
+    `Female (n)` = sum(gender == 0, na.rm = TRUE),
+    `Male (n)` = sum(gender == 1, na.rm = TRUE),
+    `Sample Size` = n()
+  )
+
+# Make the discipline names lowercase (assuming there's a "discipline" or similar column)
+summary_table <- summary_table %>%
+  mutate(across(1, ~ str_to_title(tolower(.))))  
+
+# Build styled table
+summary_table %>%
+  kbl(
+    caption = "Table 1. Summary statistics by discipline", 
+    booktabs = TRUE,
+    digits = 2
+  ) %>%
+  kable_styling(
+    full_width = FALSE,
+    latex_options = "scale_down",
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#f2f2f2") %>%
+  row_spec(seq(1, nrow(summary_table), 2), background = "#ffffff") %>%
+  row_spec(seq(2, nrow(summary_table), 2), background = "#f9f9f9")
+```
+
+Table 1 provides detailed descriptive statistics by academic discipline, offering a closer look at sample characteristics. Mean GPA was relatively stable across disciplines, ranging from 2.48 in SS to 2.64 in HUM. However, optimism scores demonstrated more variability: students in FS reported the highest mean optimism (M = 56.96), while those in HUM reported the lowest (M = 41.05). Age was consistent across groups, averaging slightly above 22 years, with limited variability (Sd ± 1 year).
+
 
 ```{r echo=FALSE, warning=FALSE}
 # GPA distribution
@@ -325,7 +328,7 @@ gpa_table <- gpa_table %>%
 # Print the table using kable
 gpa_table %>%
   kbl(
-    caption = "Linear Regression Predicting Second Semester GPA from First Semester GPA",
+    caption = "Table 2. Linear Regression Predicting Second Semester GPA from First Semester GPA",
     digits = 3,
     booktabs = TRUE
   ) %>%
@@ -340,7 +343,7 @@ job_filter <- job %>%
 ```
 
 
-## ***Is senior-year GPA related to the degree of optimism about future employment?***
+###***Is senior-year GPA related to the degree of optimism about future employment?***
 
 In order to investigate whether academic performance influences students’ outlook on future employment (optimism), a multiple linear regression was conducted with weighted GPA as the key predictor of optimism. Gender and age were included as control variables to account for potential demographic differences. To ensure the reliability of GPA as an academic metric, students with the top 10% largest residuals were excluded from the model. This approach strengthened the validity of using averaged GPA as a predictor. Both the model (Table 3) and visualization of the model (Figure 7) are shown below.
 
@@ -367,13 +370,15 @@ model1_table <- tibble::rownames_to_column(model1_table, var = "Predictor")
 # Create styled regression table
 model1_table %>%
   kbl(
-    caption = "Linear Regression Predicting Optimism from GPA, Gender, and Age",
+    caption = "Table 3. Linear Regression Predicting Optimism from GPA, Gender, and Age",
     digits = 3,
     booktabs = TRUE
   ) %>%
   kable_styling(full_width = FALSE, position = "center") %>%
   row_spec(0, bold = TRUE, background = "#f2f2f2")
 ```
+
+In Figure 6, we visualized the regression line representing the relationship between college senior-year GPA and optimism scores. The plot clearly demonstrates a flat and non-directional trend, indicating no meaningful association between students' academic performance and their confidence about future employment. This visual finding aligns with the regression results presented in Table 3, where GPA was not a statistically significant predictor of optimism (b = –0.216, p = .690). Together, these results suggest that students' levels of optimism are likely shaped by factors other than academic achievement in their final year of college. 
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -388,14 +393,12 @@ ggplot(job_filter, aes(x = GPA_weighted, y = optimism_score)) +
   theme_minimal()
 
 ```
-
 ***Figure 6. Relationship between GPA and Optimism***
 
-In Figure 7, we visualized the regression line representing the relationship between college senior-year GPA and optimism scores. The plot clearly demonstrates a flat and non-directional trend, indicating no meaningful association between students' academic performance and their confidence about future employment. This visual finding aligns with the regression results presented in Table 3, where GPA was not a statistically significant predictor of optimism (b = –0.216, p = .690). Together, these results suggest that students' levels of optimism are likely shaped by factors other than academic achievement in their final year of college. 
 
-## ***Is the relationship between GPA and optimism consistent or different across disciplines?***
+### ***Is the relationship between GPA and optimism consistent or different across disciplines?***
 
-The next question we decided to tackle was to examine whether an association between academic performance and employment-related optimism varied by field of study. To evaluate this another multiple linear regression was conducted with interaction terms between GPA and academic discipline. This analysis aimed to determine whether the strength or direction of the GPA–optimism relationship differed across disciplines, while also accounting for potential confounding influences of gender and age. By including both main effects (Table 3) and interaction terms (Table 4), the model tested whether students in different academic areas experience distinct patterns in how GPA influences their outlook on future employment.
+The next question we decided to tackle was to examine whether an association between academic performance and employment-related optimism varied by field of study. To evaluate this another multiple linear regression was conducted with interaction terms between GPA and academic discipline. This analysis aimed to determine whether the strength or direction of the GPA–optimism relationship differed across disciplines, while also accounting for potential confounding influences of gender and age. By including both main effects (Table 4) and interaction terms (Table 4), the model tested whether students in different academic areas experience distinct patterns in how GPA influences their outlook on future employment.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # Fit main effects model
@@ -417,7 +420,7 @@ model3_table <- model3_table %>%
 # Display styled table
 model3_table %>%
   kbl(
-    caption = "Linear Regression Predicting Optimism by Discipline, Controlling for Gender and Age", 
+    caption = "Table 4. Linear Regression Predicting Optimism by Discipline, Controlling for Gender and Age", 
     digits = 3,
     booktabs = TRUE
   ) %>%
@@ -427,7 +430,7 @@ model3_table %>%
 
 ```
 
-Table 3 summarizes our main effects model and demonstrates optimism levels vary significantly by academic discipline, with Humanities, Natural Sciences, and Social Sciences students reporting substantially lower optimism compared to those in Applied Sciences. Formal Sciences students were slightly more optimistic. Gender also showed a modest but significant effect, with males reporting lower optimism. Age had no significant association. These results suggest that discipline is a strong predictor of students' confidence in their future, independent of age and gender.
+Table 4 summarizes our main effects model and demonstrates optimism levels vary significantly by academic discipline, with Humanities, Natural Sciences, and Social Sciences students reporting substantially lower optimism compared to those in Applied Sciences. Formal Sciences students were slightly more optimistic. Gender also showed a modest but significant effect, with males reporting lower optimism. Age had no significant association. These results suggest that discipline is a strong predictor of students' confidence in their future, independent of age and gender.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # Figure
@@ -494,7 +497,7 @@ model2_table <- model2_table %>%
 # Display styled table
 model2_table %>%
   kbl(
-    caption = "Linear Regression Predicting Optimism from GPA, Discipline, Gender, and Age (with Interaction)",
+    caption = "Table 5. Linear Regression Predicting Optimism from GPA, Discipline, Gender, and Age (with Interaction)",
     digits = 3,
     booktabs = TRUE
   ) %>%
@@ -502,7 +505,7 @@ model2_table %>%
   row_spec(0, bold = TRUE, background = "#f2f2f2")
 ```
 
-In our interaction model (Table 4) we find that students in HUM, NF, and SS report significantly lower optimism than those in Applied Sciences, regardless of GPA. Gender also plays a modest role, with males reporting lower optimism. However, GPA itself is not predictive, and its effect does not interact with discipline — meaning academic performance does not differentially relate to optimism across majors.
+In our interaction model (Table 5) we find that students in HUM, NF, and SS report significantly lower optimism than those in Applied Sciences, regardless of GPA. Gender also plays a modest role, with males reporting lower optimism. However, GPA itself is not predictive, and its effect does not interact with discipline — meaning academic performance does not differentially relate to optimism across majors.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 ggplot(job_filter, aes(x = GPA_weighted, y = optimism_score)) +
@@ -522,11 +525,11 @@ ggplot(job_filter, aes(x = GPA_weighted, y = optimism_score)) +
 
 Figure 8 presents scatterplots with fitted regression lines illustrating the relationship between GPA and optimism across five academic disciplines. Each facet represents a different discipline, allowing visual comparison of slopes and distributions within and across fields. Visually, the regression lines are relatively flat across all disciplines, suggesting little to no relationship between GPA and optimism within any single discipline.
 
-This visual pattern aligns with the interaction model in Table 4, where none of the GPA × discipline interaction terms reached statistical significance (p > .28 for all). Specifically, although the direction of the slopes differs slightly by field (e.g., mildly upward for Formal Sciences, slightly downward for Natural Sciences), none of these slopes are steep or statistically distinguishable from zero.
+This visual pattern aligns with the interaction model in Table 5, where none of the GPA × discipline interaction terms reached statistical significance (p > .28 for all). Specifically, although the direction of the slopes differs slightly by field (e.g., mildly upward for Formal Sciences, slightly downward for Natural Sciences), none of these slopes are steep or statistically distinguishable from zero.
 
 Together, Figure 8 and Table 4 indicate that while academic discipline is a robust predictor of optimism, GPA is not, and there is no evidence that the GPA–optimism relationship depends on a student’s field of study.
 
-## ***Are optimism levels different across academic disciplines, regardless of GPA?***
+### ***Are optimism levels different across academic disciplines, regardless of GPA?***
 
 Finally, to examine whether students’ optimism about post-graduation employment differs by academic discipline—independent of their academic performance—we first conducted a one-way ANOVA (Table 5) to test for overall differences in optimism scores across disciplines followed by a post-hoc analysis using Tukey-adjusted pairwise comparisons (Table 6). This allowed us to determine which specific academic disciplines significantly differed from one another in terms of optimism, while controlling for covariates such as gender and age.
 
@@ -550,17 +553,21 @@ colnames(anova_table) <- c("Df", "Sum Sq", "Mean Sq", "F value", "Pr(>F)")
 # Add row labels
 anova_table <- tibble::rownames_to_column(anova_table, var = "Term")
 
-# 
+# Round numeric columns to 3 decimal places (except Df)
+anova_table <- anova_table %>%
+  mutate(across(c(`Sum Sq`, `Mean Sq`, `F value`, `Pr(>F)`), ~ round(.x, 3)))
+
+# Replace any NAs with "--"
 anova_table[is.na(anova_table)] <- "--"
 
-# Create kable table
+# Display the formatted table
 anova_table %>%
-  kbl(caption = "ANOVA Summary: Optimism by Discipline", digits = 3, booktabs = TRUE) %>%
+  kbl(caption = "Table 6. ANOVA Summary: Optimism by Discipline", booktabs = TRUE) %>%
   kable_styling(full_width = FALSE, position = "center") %>%
   row_spec(0, bold = TRUE, background = "#f2f2f2")
 ```
 
-To assess whether students' optimism about future employment varied by academic discipline, a one-way ANOVA was conducted. The model was statistically significant, F(4, 473) = 114.1, p \< .001, indicating that mean optimism scores differed significantly across the five disciplines.
+To assess whether students' optimism about future employment varied by academic discipline, a one-way ANOVA was conducted. The model was statistically significant, F(4, 473) = 114.1, p \< .001, indicating that mean optimism scores differed significantly across the five disciplines (Table 6).
 
 ```{r echo=FALSE, warning=FALSE}
 library(stringr)
@@ -581,7 +588,7 @@ colnames(tukey_table) <- c("Comparison", "Difference", "Lower CI", "Upper CI", "
 # Clean up and display table
 tukey_table %>%
   kbl(
-    caption = "Tukey HSD Post-Hoc Comparisons of Optimism by Discipline", 
+    caption = "Table 7. Tukey HSD Post-Hoc Comparisons of Optimism by Discipline", 
     digits = 3,
     booktabs = TRUE
   ) %>%
@@ -590,7 +597,7 @@ tukey_table %>%
 
 ```
 
-The Tukey HSD post-hoc analysis revealed several significant differences in optimism scores across academic disciplines. Specifically, Humanities students reported significantly lower optimism compared to all other disciplines, including Applied Sciences (mean difference = –13.53, p \< .001), Formal Sciences (–15.36, p \< .001), Natural Sciences (–11.76, p \< .001), and Social Sciences (–10.20, p \< .001). Natural Sciences and Social Sciences students also reported significantly lower optimism than students in Applied Sciences (p \< .001 for both comparisons). In contrast, no significant differences were observed between Formal Sciences and Applied Sciences (p = .219) or between Social Sciences and Natural Sciences (p = .365). These findings suggest that students’ academic discipline is associated with differing levels of optimism, with Humanities students consistently showing the lowest levels.
+The Tukey HSD post-hoc analysis revealed several significant differences in optimism scores across academic disciplines (Table 7). Specifically, Humanities students reported significantly lower optimism compared to all other disciplines, including Applied Sciences (mean difference = –13.53, p \< .001), Formal Sciences (–15.36, p \< .001), Natural Sciences (–11.76, p \< .001), and Social Sciences (–10.20, p \< .001). Natural Sciences and Social Sciences students also reported significantly lower optimism than students in Applied Sciences (p \< .001 for both comparisons). In contrast, no significant differences were observed between Formal Sciences and Applied Sciences (p = .219) or between Social Sciences and Natural Sciences (p = .365). These findings suggest that students’ academic discipline is associated with differing levels of optimism, with Humanities students consistently showing the lowest levels.
 
 
 

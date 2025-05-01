@@ -114,12 +114,12 @@ ggplot(gpa_clean, aes(x = s1_gpa, y = s2_gpa, color = exclude)) +
   theme_minimal()
 
 # Step 4: Remove flagged and compute GPA_avg
-gpa_clean <- gpa_clean %>%
-  filter(!exclude) %>%
-  mutate(GPA_avg = (s1_gpa + s2_gpa) / 2)
+# gpa_clean <- gpa_clean %>%
+#  filter(!exclude) %>%
+#  mutate(GPA_avg = (s1_gpa + s2_gpa) / 2)
 
 # Step 5: Replace gpa with gpa_clean before merging
-gpa <- gpa_clean  # ensures you use only cleaned records in merge
+ gpa <- gpa_clean  # ensures you use only cleaned records in merge
 
 ```
 
@@ -191,5 +191,5 @@ analytic_job_data <- analytic_job_data %>%
   select(-c(6, 7, 8))
 
 
-write_csv(analytic_job_data, "analytic_job.csv")
+write_csv(analytic_job_data, "job.csv")
 ```

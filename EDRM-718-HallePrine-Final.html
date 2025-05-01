@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Halle Prine">
+
+<title>Job Prep Analysis Report</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="EDRM-718-HallePrine-Final_files/libs/clipboard/clipboard.min.js"></script>
+<script src="EDRM-718-HallePrine-Final_files/libs/quarto-html/quarto.js"></script>
+<script src="EDRM-718-HallePrine-Final_files/libs/quarto-html/popper.min.js"></script>
+<script src="EDRM-718-HallePrine-Final_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="EDRM-718-HallePrine-Final_files/libs/quarto-html/anchor.min.js"></script>
+<link href="EDRM-718-HallePrine-Final_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="EDRM-718-HallePrine-Final_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="EDRM-718-HallePrine-Final_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="EDRM-718-HallePrine-Final_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="EDRM-718-HallePrine-Final_files/libs/bootstrap/bootstrap-c0367b04c37547644fece4185067e4a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="EDRM-718-HallePrine-Final_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="EDRM-718-HallePrine-Final_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics"><span class="header-section-number">1.1</span> Descriptive Statistics</a></li>
+  <li><a href="#analyses" id="toc-analyses" class="nav-link" data-scroll-target="#analyses"><span class="header-section-number">1.2</span> Analyses</a></li>
+  <li><a href="#conclustions" id="toc-conclustions" class="nav-link" data-scroll-target="#conclustions"><span class="header-section-number">1.3</span> Conclustions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Job Prep Analysis Report</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Halle Prine </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>As college students approach graduation, perceptions about post-graduation job opportunities may strongly influence both motivation and decision-making and could alter their own mental well-being. Optimism about future employment is especially important, since optimism may reflect robust grit and a student’s inate confidence in their ability to transition from college to professional jobs. It’s important to understand these factors that shape optimism so that college institutions better support students as they prepare to enter the workforce.</p>
+<p>Academic performance is another potential contributor to employment-related optimism. A traditional indicator of academic success, Grade Point Average (GPA), may influence students perception on attainability of future job prospects. However, it is unclear if the relationship between optimism, disciplines, and GPA exist expecially across different degrees of study. Students in applied or technical disciplines may perceive greater job security or demand for their skills, while students in humanities or social sciences may face more uncertainty, potentially altering their outcome compared to other students of different disciplines. If a relationship is found this may help enforce better discipline specific counsuling to aid in promoting optimism around future workforce opportunites.</p>
+<p>The purpose of this report is to <strong><em>investigate the relationship between college senior’s GPA and optimism</em></strong> about future employment. Specifically we will examine whether this relationship differs across academic disciplines. In order to ensure reliability of GPA as a performance measure we examined consistency between between first and second semester GPA and excluded any students with unusually large discrepancies. We also accounted for demographic differences by controlling for gender and age in all models.</p>
+<p>The three research questions that guide this report are:</p>
+<ul>
+<li><p><strong><em>Is senior-year GPA related to the degree of optimism about future employment?</em></strong></p></li>
+<li><p><strong><em>Is the relationship between GPA and optimism consistent or different across disciplines?</em></strong></p></li>
+<li><p><strong><em>Are optimism levels different across academic disciplines, regardless of GPA?</em></strong></p></li>
+</ul>
+<section id="descriptive-statistics" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="descriptive-statistics"><span class="header-section-number">1.1</span> Descriptive Statistics</h2>
+<p>The analytic sample was compiled by an independent research team, Real World Solutions (RWS), who distributed an optimism survey to over 700 college seniors from 23 major universities across the United States. The final sample included 740 students, with a nearly even gender distribution (51% female, 49% male) and an average age of 22 years (± 1 year). In terms of academic discipline, students in Natural Sciences made up the largest share (21%), followed by those in Formal Sciences and Social Sciences (20% each). Applied Sciences represented 19% of the sample, while Humanities accounted for the remaining 18%.</p>
+<p>We visualized the sample characteristics using two stacked bar graphs. Figure 1 displays the gender distribution (male vs.&nbsp;female) across academic disciplines, while Figure 2 shows how students are distributed across GPA categories—Low (GPA &lt; 2.5), Medium (2.5–3.5), and High (&gt; 3.5)—within each discipline. A more detailed summary of the sample’s demographic and academic characteristics is presented in Table 1.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 1. Gender by Academic Discipline Stacked Bar Plot</em></strong> Shown in Figure 1, we visualizes the gender distribution across the five academic disciplines: Applied Sciences (AS), Formal Sciences (FS), Humanities (HUM), Natural Sciences (NS), and Social Sciences (SS). Gender representation was relatively balanced in most disciplines, with Applied Sciences, Humanities, Formal Sciences, and Natural Sciences each showing near-equal proportions of male and female students. Social Sciences, however, had a noticeably higher proportion of female students. These patterns may reflect broader national trends in undergraduate enrollment and highlight the importance of considering gender composition when interpreting discipline-specific outcomes.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 2. GPA by Academic Discipline Stacked Bar Graph</em></strong></p>
+<p>Exploring the distribution of students across GPA categories—Low (&lt;2.5), Medium (2.5–3.5), and High (&gt;3.5)—within each academic discipline is shown ins Figure 2. In all five disciplines, the majority of students fall into the Medium GPA category (green), with relatively few students classified in the High GPA group (blue). These results indicate that while GPA distributions are generally consistent, there are some discipline-specific variations in how students are spread across performance categories.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 1. Summary statistics by discipline</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Discipline</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Mean GPA</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">SD GPA</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Mean Optimism</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">SD Optimism</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Mean Age</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">SD Age</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Female (n)</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Male (n)</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Sample Size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; background-color: rgba(255, 255, 255, 255) !important;">Applied Sciences</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">2.58</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">0.75</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">54.78</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">6.53</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">22.06</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">0.56</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">74</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">70</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">144</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; background-color: rgba(249, 249, 249, 255) !important;">Formal Sciences</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">2.58</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">0.73</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">56.96</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">6.18</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">22.07</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">0.55</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">75</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">74</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">149</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; background-color: rgba(255, 255, 255, 255) !important;">Humanities</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">2.63</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">0.66</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">41.05</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">5.54</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">21.98</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">0.52</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">68</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">71</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">139</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; background-color: rgba(249, 249, 249, 255) !important;">Natural Sciences</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">2.55</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">0.75</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">45.00</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">5.48</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">22.00</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">0.61</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">77</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">78</td>
+<td style="text-align: right; background-color: rgba(249, 249, 249, 255) !important;">155</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; background-color: rgba(255, 255, 255, 255) !important;">Social Sciences</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">2.46</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">0.74</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">46.43</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">5.94</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">21.94</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">0.64</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">86</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">67</td>
+<td style="text-align: right; background-color: rgba(255, 255, 255, 255) !important;">153</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Table 1 provides detailed descriptive statistics by academic discipline, offering a closer look at sample characteristics. Mean GPA was relatively stable across disciplines, ranging from 2.48 in SS to 2.64 in HUM. However, optimism scores demonstrated more variability: students in FS reported the highest mean optimism (M = 56.96), while those in HUM reported the lowest (M = 41.05). Age was consistent across groups, averaging slightly above 22 years, with limited variability (Sd ± 1 year).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 3. Distribution of GPA Histogram</em></strong></p>
+<p>The histogram in Figure 3 illustrates the distribution of weighted GPA scores among the sample of 740 college seniors. The distribution is approximately normal, with a slight left skew, indicating that most students had their GPA clustered between 2.5 and 3.5. The peak occurs near a GPA of 3.0, with fewer students falling below 2.0 or above 3.8. This central tendency suggests that the sample is academically representative, with only a small proportion of students at either extreme. The range and spread of GPA values also reinforce the appropriateness of using GPA as a continuous variable in subsequent regression analyses examining its relationship to optimism.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 4. Distribution of Optimism Scores Histogram</em></strong></p>
+<p>Now moving to optimism Figure 4 shows the distribution of optimism scores among graduating college seniors. The distribution is moderately right-skewed, with most students scoring between 40 and 55 on the optimism scale. The peak appears around 45, indicating a central tendency toward moderate optimism. A small number of students reported very low or very high optimism, suggesting variability in students’ confidence about their post-graduation futures. This spread reinforces the importance of examining factors—like GPA and academic discipline—that may help explain these differences in perceived job prospects.</p>
+</section>
+<section id="analyses" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="analyses"><span class="header-section-number">1.2</span> Analyses</h2>
+<section id="consistency-check-of-semester-1-and-semester-2-gpa" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="consistency-check-of-semester-1-and-semester-2-gpa"><span class="header-section-number">1.2.1</span> Consistency Check of Semester 1 and Semester 2 GPA</h3>
+<p>Before proceeding to the main analyses, it was important to verify that key aspects of the data—namely, the consistency of GPA over time and the correct coding of the optimism measure—were accurate and reliable. To test for consistency we first identified any usually high residuals since high residuals can skew results from our models and further misconstrue whether there are relationships or not between out variables. These residuals can be seen in Figure 5 below those that a highlighted red were flagged as high residuals in which we later filter out of our analysis. We also ensured that first- and second-semester GPA values were consistent before computing an average GPA which is also shown in Figure 5. Additonally, To test for consistency between first-and-second semester GPA a linear regression model was performed to further confirm (Table 2), to show that first semester GPA can predict second semester GPA, indicating strong consistency between semesters.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 5. Visual Verification of GPA Consistencies and high residuals</em></strong></p>
+<p>Orienting the Figure 5, we see a mapping of residuals to highlight which data points were flagged as unusually high. To identify these outliers, the flag_large_residuals() function was developed. This function fits a linear model between two variables—in this case, first- and second-semester GPA—and flags the top p largest absolute residuals as TRUE, indicating they are unusually inconsistent with the model. All other cases are marked as FALSE, reflecting more typical or consistent academic performance. This visual, alongside the regression line, demonstrates a strong positive relationship between the two GPA measures, supporting our decision to average them for a single academic performance score.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 2. Linear Regression Predicting Second Semester GPA from First Semester GPA</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Predictor</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Estimate</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Std_Error</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">t_value</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.403</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">7.505</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">s1_gpa</td>
+<td style="text-align: right;">0.841</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">41.712</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>In parallel, optimism scores were calculated as a composite from Likert-style survey items. Any items that were negatively worded were reverse-scored using the score_likert_scale() function, which takes the maximum value of the scale and subtracts each specified item’s score to reverse its direction. The function then replaces the original item values with their reversed versions and computes a total composite score across all items. This process ensured consistent interpretation across items before combining them into a single optimism score.</p>
+<p>###<strong><em>Is senior-year GPA related to the degree of optimism about future employment?</em></strong></p>
+<p>In order to investigate whether academic performance influences students’ outlook on future employment (optimism), a multiple linear regression was conducted with weighted GPA as the key predictor of optimism. Gender and age were included as control variables to account for potential demographic differences. To ensure the reliability of GPA as an academic metric, students with the top 10% largest residuals were excluded from the model. This approach strengthened the validity of using averaged GPA as a predictor. Both the model (Table 3) and visualization of the model (Figure 7) are shown below.</p>
+<p>Staring with our main effects model (Table 3) below, the regression model did not identify any significant predictors of optimism among GPA, gender, and age. While gender showed a marginal trend (p = .091), suggesting males may report slightly lower optimism, neither GPA (p = .690) nor age (p = .222) were statistically significant. These results suggest that academic performance and demographic factors do not strongly explain variation in optimism about future employment in this sample.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 3. Linear Regression Predicting Optimism from GPA, Gender, and Age</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Predictor</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Estimate</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Std. Error</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">t value</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">31.942</td>
+<td style="text-align: right;">15.035</td>
+<td style="text-align: right;">2.125</td>
+<td style="text-align: right;">0.034</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GPA_weighted</td>
+<td style="text-align: right;">-0.216</td>
+<td style="text-align: right;">0.542</td>
+<td style="text-align: right;">-0.399</td>
+<td style="text-align: right;">0.690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gender</td>
+<td style="text-align: right;">-1.301</td>
+<td style="text-align: right;">0.768</td>
+<td style="text-align: right;">-1.694</td>
+<td style="text-align: right;">0.091</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.829</td>
+<td style="text-align: right;">0.679</td>
+<td style="text-align: right;">1.222</td>
+<td style="text-align: right;">0.222</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>In Figure 6, we visualized the regression line representing the relationship between college senior-year GPA and optimism scores. The plot clearly demonstrates a flat and non-directional trend, indicating no meaningful association between students’ academic performance and their confidence about future employment. This visual finding aligns with the regression results presented in Table 3, where GPA was not a statistically significant predictor of optimism (b = –0.216, p = .690). Together, these results suggest that students’ levels of optimism are likely shaped by factors other than academic achievement in their final year of college.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 6. Relationship between GPA and Optimism</em></strong></p>
+</section>
+<section id="is-the-relationship-between-gpa-and-optimism-consistent-or-different-across-disciplines" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="is-the-relationship-between-gpa-and-optimism-consistent-or-different-across-disciplines"><span class="header-section-number">1.2.2</span> <strong><em>Is the relationship between GPA and optimism consistent or different across disciplines?</em></strong></h3>
+<p>The next question we decided to tackle was to examine whether an association between academic performance and employment-related optimism varied by field of study. To evaluate this another multiple linear regression was conducted with interaction terms between GPA and academic discipline. This analysis aimed to determine whether the strength or direction of the GPA–optimism relationship differed across disciplines, while also accounting for potential confounding influences of gender and age. By including both main effects (Table 4) and interaction terms (Table 4), the model tested whether students in different academic areas experience distinct patterns in how GPA influences their outlook on future employment.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 4. Linear Regression Predicting Optimism by Discipline, Controlling for Gender and Age</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Predictor</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Estimate</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Std_Error</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">t_value</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">52.562</td>
+<td style="text-align: right;">10.817</td>
+<td style="text-align: right;">4.859</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Formal Sciences</td>
+<td style="text-align: right;">1.905</td>
+<td style="text-align: right;">0.866</td>
+<td style="text-align: right;">2.200</td>
+<td style="text-align: right;">0.028</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Humanities</td>
+<td style="text-align: right;">-13.464</td>
+<td style="text-align: right;">0.894</td>
+<td style="text-align: right;">-15.068</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Natural Sciences</td>
+<td style="text-align: right;">-9.830</td>
+<td style="text-align: right;">0.864</td>
+<td style="text-align: right;">-11.376</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Social Sciences</td>
+<td style="text-align: right;">-8.367</td>
+<td style="text-align: right;">0.878</td>
+<td style="text-align: right;">-9.535</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gender</td>
+<td style="text-align: right;">-1.225</td>
+<td style="text-align: right;">0.551</td>
+<td style="text-align: right;">-2.223</td>
+<td style="text-align: right;">0.027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.490</td>
+<td style="text-align: right;">0.267</td>
+<td style="text-align: right;">0.789</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Table 4 summarizes our main effects model and demonstrates optimism levels vary significantly by academic discipline, with Humanities, Natural Sciences, and Social Sciences students reporting substantially lower optimism compared to those in Applied Sciences. Formal Sciences students were slightly more optimistic. Gender also showed a modest but significant effect, with males reporting lower optimism. Age had no significant association. These results suggest that discipline is a strong predictor of students’ confidence in their future, independent of age and gender.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 7. GPA verses Optimism Across Academic Disciplines</em></strong></p>
+<p>Figure 8 displays boxplots of optimism scores across five academic disciplines: Applied Sciences (AS), Formal Sciences (FS), Humanities (HUM), Natural Sciences (NS), and Social Sciences (SS). The individual data points are overlaid with jittered dots to show the spread of responses within each group.</p>
+<p>The figure visually confirms the regression findings in Table 3, where discipline significantly predicted optimism. Students in Humanities, Natural Sciences, and Social Sciences show noticeably lower median optimism scores, with many scores falling below 50. In contrast, Applied Sciences and Formal Sciences display higher medians and narrower interquartile ranges. This reinforces the regression results indicating that students in HUM, NS, and SS report significantly lower optimism than their peers in AS, even after adjusting for gender and age.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 5. Linear Regression Predicting Optimism from GPA, Discipline, Gender, and Age (with Interaction)</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Predictor</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Estimate</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Std_Error</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">t_value</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">54.779</td>
+<td style="text-align: right;">11.024</td>
+<td style="text-align: right;">4.969</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gpa_weighted</td>
+<td style="text-align: right;">-0.955</td>
+<td style="text-align: right;">0.827</td>
+<td style="text-align: right;">-1.155</td>
+<td style="text-align: right;">0.249</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Formal Sciences</td>
+<td style="text-align: right;">-1.410</td>
+<td style="text-align: right;">3.203</td>
+<td style="text-align: right;">-0.440</td>
+<td style="text-align: right;">0.660</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Humanities</td>
+<td style="text-align: right;">-15.603</td>
+<td style="text-align: right;">3.576</td>
+<td style="text-align: right;">-4.363</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Natural Sciences</td>
+<td style="text-align: right;">-11.544</td>
+<td style="text-align: right;">3.135</td>
+<td style="text-align: right;">-3.682</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Social Sciences</td>
+<td style="text-align: right;">-11.445</td>
+<td style="text-align: right;">3.165</td>
+<td style="text-align: right;">-3.616</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gender</td>
+<td style="text-align: right;">-1.194</td>
+<td style="text-align: right;">0.555</td>
+<td style="text-align: right;">-2.151</td>
+<td style="text-align: right;">0.032</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">0.493</td>
+<td style="text-align: right;">0.285</td>
+<td style="text-align: right;">0.776</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gpa_weighted × Formal Sciences</td>
+<td style="text-align: right;">1.287</td>
+<td style="text-align: right;">1.190</td>
+<td style="text-align: right;">1.082</td>
+<td style="text-align: right;">0.280</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gpa_weighted × Humanities</td>
+<td style="text-align: right;">0.840</td>
+<td style="text-align: right;">1.324</td>
+<td style="text-align: right;">0.635</td>
+<td style="text-align: right;">0.526</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gpa_weighted × Natural Sciences</td>
+<td style="text-align: right;">0.674</td>
+<td style="text-align: right;">1.166</td>
+<td style="text-align: right;">0.578</td>
+<td style="text-align: right;">0.563</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gpa_weighted × Social Sciences</td>
+<td style="text-align: right;">1.213</td>
+<td style="text-align: right;">1.214</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.318</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>In our interaction model (Table 5) we find that students in HUM, NF, and SS report significantly lower optimism than those in Applied Sciences, regardless of GPA. Gender also plays a modest role, with males reporting lower optimism. However, GPA itself is not predictive, and its effect does not interact with discipline — meaning academic performance does not differentially relate to optimism across majors.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 8. Optimism by Academic Disciplines</em></strong></p>
+<p>Figure 8 presents scatterplots with fitted regression lines illustrating the relationship between GPA and optimism across five academic disciplines. Each facet represents a different discipline, allowing visual comparison of slopes and distributions within and across fields. Visually, the regression lines are relatively flat across all disciplines, suggesting little to no relationship between GPA and optimism within any single discipline.</p>
+<p>This visual pattern aligns with the interaction model in Table 5, where none of the GPA × discipline interaction terms reached statistical significance (p &gt; .28 for all). Specifically, although the direction of the slopes differs slightly by field (e.g., mildly upward for Formal Sciences, slightly downward for Natural Sciences), none of these slopes are steep or statistically distinguishable from zero.</p>
+<p>Together, Figure 8 and Table 4 indicate that while academic discipline is a robust predictor of optimism, GPA is not, and there is no evidence that the GPA–optimism relationship depends on a student’s field of study.</p>
+</section>
+<section id="are-optimism-levels-different-across-academic-disciplines-regardless-of-gpa" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="are-optimism-levels-different-across-academic-disciplines-regardless-of-gpa"><span class="header-section-number">1.2.3</span> <strong><em>Are optimism levels different across academic disciplines, regardless of GPA?</em></strong></h3>
+<p>Finally, to examine whether students’ optimism about post-graduation employment differs by academic discipline—independent of their academic performance—we first conducted a one-way ANOVA (Table 5) to test for overall differences in optimism scores across disciplines followed by a post-hoc analysis using Tukey-adjusted pairwise comparisons (Table 6). This allowed us to determine which specific academic disciplines significantly differed from one another in terms of optimism, while controlling for covariates such as gender and age.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 6. ANOVA Summary: Optimism by Discipline</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Term</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Df</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Sum Sq</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Mean Sq</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">F value</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">discipline_marker</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">16558.74</td>
+<td style="text-align: right;">4139.686</td>
+<td style="text-align: left;">114.098</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residuals</td>
+<td style="text-align: right;">473</td>
+<td style="text-align: right;">17161.25</td>
+<td style="text-align: right;">36.282</td>
+<td style="text-align: left;">--</td>
+<td style="text-align: left;">--</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>To assess whether students’ optimism about future employment varied by academic discipline, a one-way ANOVA was conducted. The model was statistically significant, F(4, 473) = 114.1, p &lt; .001, indicating that mean optimism scores differed significantly across the five disciplines (Table 6).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table 7. Tukey HSD Post-Hoc Comparisons of Optimism by Discipline</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Comparison</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Difference</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Lower CI</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">Upper CI</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(242, 242, 242, 255) !important;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Formal Sciences-Applied Sciences</td>
+<td style="text-align: right;">1.828</td>
+<td style="text-align: right;">-0.549</td>
+<td style="text-align: right;">4.204</td>
+<td style="text-align: right;">0.219</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Humanities-Applied Sciences</td>
+<td style="text-align: right;">-13.529</td>
+<td style="text-align: right;">-15.982</td>
+<td style="text-align: right;">-11.076</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Natural Sciences-Applied Sciences</td>
+<td style="text-align: right;">-9.932</td>
+<td style="text-align: right;">-12.303</td>
+<td style="text-align: right;">-7.562</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Social Sciences-Applied Sciences</td>
+<td style="text-align: right;">-8.372</td>
+<td style="text-align: right;">-10.771</td>
+<td style="text-align: right;">-5.972</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Humanities-Formal Sciences</td>
+<td style="text-align: right;">-15.356</td>
+<td style="text-align: right;">-17.767</td>
+<td style="text-align: right;">-12.946</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Natural Sciences-Formal Sciences</td>
+<td style="text-align: right;">-11.760</td>
+<td style="text-align: right;">-14.086</td>
+<td style="text-align: right;">-9.433</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Social Sciences-Formal Sciences</td>
+<td style="text-align: right;">-10.199</td>
+<td style="text-align: right;">-12.556</td>
+<td style="text-align: right;">-7.842</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Natural Sciences-Humanities</td>
+<td style="text-align: right;">3.597</td>
+<td style="text-align: right;">1.192</td>
+<td style="text-align: right;">6.002</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Social Sciences-Humanities</td>
+<td style="text-align: right;">5.157</td>
+<td style="text-align: right;">2.723</td>
+<td style="text-align: right;">7.591</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Social Sciences-Natural Sciences</td>
+<td style="text-align: right;">1.560</td>
+<td style="text-align: right;">-0.791</td>
+<td style="text-align: right;">3.912</td>
+<td style="text-align: right;">0.365</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>The Tukey HSD post-hoc analysis revealed several significant differences in optimism scores across academic disciplines (Table 7). Specifically, Humanities students reported significantly lower optimism compared to all other disciplines, including Applied Sciences (mean difference = –13.53, p &lt; .001), Formal Sciences (–15.36, p &lt; .001), Natural Sciences (–11.76, p &lt; .001), and Social Sciences (–10.20, p &lt; .001). Natural Sciences and Social Sciences students also reported significantly lower optimism than students in Applied Sciences (p &lt; .001 for both comparisons). In contrast, no significant differences were observed between Formal Sciences and Applied Sciences (p = .219) or between Social Sciences and Natural Sciences (p = .365). These findings suggest that students’ academic discipline is associated with differing levels of optimism, with Humanities students consistently showing the lowest levels.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="EDRM-718-HallePrine-Final_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Figure 9. Mean Optimism by Academic Discipline</em></strong></p>
+<p>Figure 9 illustrates the mean optimism scores across five academic disciplines, with error bars representing 95% confidence intervals. Students in Formal Sciences and Applied Sciences reported the highest levels of optimism, with mean scores exceeding 55, whereas students in Humanities had the lowest optimism scores, averaging near 42. Natural Sciences and Social Sciences fell between these extremes, showing moderately lower optimism than the technical fields. These visual trends are statistically confirmed by the Tukey HSD post-hoc comparisons (Table X), which reveal significant pairwise differences in optimism between most disciplines. Specifically, Humanities, Natural Sciences, and Social Sciences students reported significantly lower optimism than those in Applied Sciences and Formal Sciences (all p-values &lt; .001). The only non-significant differences emerged between Formal Sciences and Applied Sciences (p = .219), and between Social Sciences and Natural Sciences (p = .365). These results collectively suggest that academic discipline is a meaningful predictor of students’ optimism about future employment, independent of GPA.</p>
+</section>
+</section>
+<section id="conclustions" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="conclustions"><span class="header-section-number">1.3</span> Conclustions</h2>
+<p>This analysis explored the relationship between college senior-year GPA and students’ optimism scores about post-graduation employment, with particular attention to whether this relationship varied by academic discipline. Our findings indicated that GPA was not a significant predictor of optimism, and the association between GPA and optimism did not differ across disciplines. However, optimism levels did vary significantly between disciplines: students in Applied and Formal Sciences reported higher levels of optimism, while those in Humanities, Natural Sciences, and Social Sciences reported significantly lower optimism, even after controlling for gender and age. This suggests that students’ perceptions of their post-graduation opportunities may be shaped not only by academic performance, but also by the nature of their field of study—possibly reflecting differences in job market clarity, career pipelines, or societal narratives around discipline value.</p>
+<p>Gender also emerged as a modest predictor, with males reporting slightly lower optimism than females, though this difference was small. Age was not a significant factor, suggesting that optimism is more strongly tied to academic and social context than to maturity or proximity to graduation.</p>
+<p>These findings have practical implications for colleges and universities. Institutions may consider implementing targeted career development programs, alumni mentorship opportunities, and clearer employment pathway communications—particularly in disciplines where students reported lower optimism. Career services offices could collaborate with academic departments in Humanities and Social Sciences to improve visibility into diverse career trajectories and help students translate their skills into employable terms. Additionally, fostering discipline-specific support networks, internship pipelines, and employer engagement initiatives may help bridge the optimism gap and ensure all students, regardless of major, feel confident and supported as they enter the workforce.</p>
+<p>A key strength of this study was the use of a cleaned dataset that excluded students with inconsistent GPA reporting, improving the reliability of GPA as a performance indicator. However, an important limitation is the low internal consistency of the optimism measure (Cronbach’s α = .51), which may have attenuated the strength of observed associations. The use of cross-sectional data also limits causal interpretation. Future work should aim to improve measurement reliability and consider longitudinal or mixed-method designs to better capture how academic performance and field of study shape employment-related attitudes over time.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
