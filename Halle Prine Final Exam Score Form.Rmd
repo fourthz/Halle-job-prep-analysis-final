@@ -1,0 +1,90 @@
+---
+title: "EDRM 718 Final Exam Score Form"
+output:
+  html_document:
+    df_print: paged
+---
+
+**Student: Halle Prine**
+
+The scored elements are itemized below, along with the total number of possible points for each element. Points were awarded on a scale, with zero points indicating that the element was not addressed and maximum points indicating that not only was it addressed but done completely correctly.
+
+***
+
+#### Repository (10 points)
+
+**Repository development and organization; commits and documentation of commits**
+
+Very nice! A nice trail of commits along the way with a separate commit for each part. The readme file should be more informative regarding both the purpose and structure of the repo.
+
+**9/10**
+
+***
+
+#### Organization and Neatness (10 points)
+
+**Readability, organization, and neatness of output**
+
+This is very nicely organized and easy to read.
+
+**10/10**
+
+***
+
+#### Functions (15 points)
+
+**Function development, documentation, and sourcing**
+
+These are well-written functions, though they need good documentation. The header for each function should describe the arguments, what the function returns, and usage.
+
+**13/15**
+
+***
+
+#### Data Preparation (20 points)
+
+**Data screening and preparation**
+
+You did much of the prepping work and some of the checking, though you did not catch the ID problem that needed to be fixed. You checked the range of GPA, but not other variables. You did a good job of joining data sets.
+
+**19/20**
+
+***
+
+#### Graphical Displays (15 points)
+
+**Visual displays of major outcomes of interest, including formatting and labeling**
+
+Beautiful and correct graphs!
+
+**15/15**
+
+***
+
+#### Descriptive Statistics (15 points)
+
+**Descriptive statistics, tables, and narrative addressing research questions**
+
+No issues here. You created reasonable statistics to accompany graphs, including statistics by groups.
+
+**15/15**
+
+***
+
+#### Inferential Statistics (15 points)
+
+**Inferential statistics and narrative addressing research questions (15 points)**
+
+Very nice work here! I like that you obtained separate slopes to investigate the second question and recognized that this is interaction, so you looked at the interaction hypothesis. You could have looked at overall interaction, however, to more directly answer the question.
+
+**14/15**
+
+***
+
+#### Total (100 points)
+
+You have already become an excellent R user/programmer. I hope that you find these skills useful throughout your professional career.
+
+**95/100**
+
+***
